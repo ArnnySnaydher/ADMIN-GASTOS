@@ -1,11 +1,16 @@
 <script setup>
   import Filtro from './components/Filtro.vue';
+  import Presupuesto from './components/Presupuesto.vue'
 </script>
 
 <template>
 <div>
   <header>
     <h1>Hello World</h1>
+    <div class="contenedor-header contenedor sombra">
+      <Presupuesto></Presupuesto>
+    </div>
+    
   </header>
   <Filtro></Filtro>
 </div>
@@ -55,4 +60,22 @@
     color: var(--blanco);
     text-align: center;
   }
+
+.contenedor{
+  width: 90%;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+.contenedor-header{
+  margin-top: -5rem;
+  transform: translateY(5rem);
+  padding: 5rem;
+}
+
+.sombra{
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background-color: var(--blanco);
+  border-radius: 1.2rem;
+  padding: 5rem;
+}
 </style>
