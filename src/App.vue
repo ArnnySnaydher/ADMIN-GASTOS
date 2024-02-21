@@ -4,10 +4,12 @@ import Presupuesto from './components/Presupuesto.vue'
 import { ref } from 'vue';
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
 
-const presupuesto = ref(0)
+const monto = ref(0)
+const disponible = ref(0)
 
-const definirPresupuesto = (cantidad) => {
-  presupuesto.value = cantidad
+const definirMonto = (cantidad) => {
+  monto.value = cantidad
+  disponible.value=cantidad
 }
 </script>
 
@@ -16,8 +18,8 @@ const definirPresupuesto = (cantidad) => {
     <header>
       <h1>Hello World</h1>
       <div class="contenedor-header contenedor sombra">
-        <Presupuesto v-if="presupuesto === 0" @definir-presupuesto="definirPresupuesto"></Presupuesto>
-        <ControlPresupuesto v-else></ControlPresupuesto>
+        <Presupuesto v-if="monto === 0" @definir-monto="definirMonto"></Presupuesto>
+        <ControlPresupuesto v-else :monto="monto" :disponible="disponible"></ControlPresupuesto>
       </div>
 
     </header>

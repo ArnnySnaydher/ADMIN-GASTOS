@@ -5,7 +5,7 @@ import Alerta from './Alerta.vue';
 const presupuesto = ref(0)
 const error=ref('')
 
-const emit = defineEmits(['definirPresupuesto'])
+const emit = defineEmits(['definirMonto'])
 
 const definirPresupuesto=()=>{
     if(presupuesto.value < 0 || presupuesto.value===''){
@@ -16,7 +16,7 @@ const definirPresupuesto=()=>{
 
         return
 }
-emit('definirPresupuesto',presupuesto.value)
+emit('definirMonto',presupuesto.value)
 }
 </script>
 
