@@ -1,36 +1,50 @@
+<script setup>
+import { ref } from 'vue';
+import Alerta from './Alerta.vue';
+
+const presupuesto = ref(0)
+const error=ref('')
+
+const definirPresupuesto=()=>{
+    if(presupuesto.value<=0){
+        error.value='Presupuesto no valido'
+        setTimeout(()=>{
+            error.value=""
+        },3000)
+}
+}
+</script>
+
 <template>
-    <form action="" class="presupuesto">
+    <form action="" class="presupuesto" @submit.prevent="definirPresupuesto">
+        <Alerta v-if="error">{{ error }}</Alerta>
         <div class="campo">
             <label for="nuevo-presupuesto">Definir Presupuesto</label>
-            <input type="number" 
-                id="nuevo-presupuesto" 
-                class="nuevo-presupuesto" 
-                placeholder="Añade tu presupuesto">
+            <input type="number" id="nuevo-presupuesto" class="nuevo-presupuesto" placeholder="Añade tu presupuesto"
+                v-model.number="presupuesto"
+                min="0">
         </div>
         <input type="submit" value="Definir Presupuesto">
     </form>
 </template>
 
-<script setup>
-
-</script>
-
 <style scoped>
-.presupuesto{
+.presupuesto {
     width: 100%;
 }
 
-.campo{
+.campo {
     display: grid;
     gap: 2rem;
 }
-.presupuesto label{
+
+.presupuesto label {
     font-size: 2.8rem;
     text-align: center;
     color: var(--azul);
 }
 
-.presupuesto input[type="number"]{
+.presupuesto input[type="number"] {
     background-color: var(--gris-claro);
     border-radius: 1rem;
     padding: 1rem;
@@ -39,7 +53,7 @@
     text-align: center;
 }
 
-.presupuesto input[type="submit"]{
+.presupuesto input[type="submit"] {
     background-color: var(--azul);
     border: none;
     padding: 1rem;
@@ -52,9 +66,8 @@
     transition: all 300ms ease-in-out;
 }
 
-.presupuesto input[type="submit"]:hover{
+.presupuesto input[type="submit"]:hover {
     background-color: #1048a4;
     cursor: pointer;
 }
-
 </style>
