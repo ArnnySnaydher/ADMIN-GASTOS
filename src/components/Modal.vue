@@ -1,25 +1,52 @@
 <script setup>
+import { ref } from 'vue';
+import Alerta from './Alerta.vue';
 import cerrarModal from '../assets/img/cerrar.svg'
+const error = ref('')
 
-defineEmits(['ocultar-modal','update:nombre','update:cantidad','update:categoria'])
-defineProps({
+defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria'])
+const props = defineProps({
     modal: {
         type: Object,
         required: true
     },
-    nombre:{
-        type:String,
-        required:true
+    nombre: {
+        type: String,
+        required: true
     },
-    cantidad:{
-        type:[String,Number],
-        required:true
+    cantidad: {
+        type: [String, Number],
+        required: true
     },
-    categoria:{
-        type:String,
-        required:true
+    categoria: {
+        type: String,
+        required: true
     },
 })
+
+const agregarGasto = () => {
+    //Validar que no haya campo
+    const { cantidad, categoria, nombre } = props
+    if ([nombre, cantidad, categoria].includes('')) {
+        error.value = 'Todos los campos son obligatorios.'
+
+        setTimeout(() => {
+            error.value=''
+        }, 3000);
+        return
+    }
+    //validad cantidad
+
+    if (cantidad <= 0 || cantidad==='') {
+        error.value = 'Cantidad no valida'
+        setTimeout(() => {
+            error.value=''
+        }, 3000);
+        return
+    }
+
+    console.log('Emitiendo gasto')
+}
 </script>
 <template>
     <div class="modal">
@@ -27,26 +54,27 @@ defineProps({
             <img :src="cerrarModal" alt="" @click="$emit('ocultar-modal')">
         </div>
 
-        <div class="contenedor contenedor-formulario" :class="[modal.animar ? 'animar':'cerrar']">
-            <form class="nuevo-gasto">
+        <div class="contenedor contenedor-formulario" :class="[modal.animar ? 'animar' : 'cerrar']">
+            <form class="nuevo-gasto" @submit.prevent="agregarGasto">
                 <legend>Añadir Gasto</legend>
+                <Alerta v-if="error">{{ error }}</Alerta>
                 <div class="campo">
                     <label for="nombre">Nombre Gasto:</label>
-                    <input type="text" id="nombre" placeholder="Añade el nombre del Gasto" 
-                        :value="nombre"
-                        @input="$emit('update:nombre',$event.target.value)">
+                    <input type="text" id="nombre" placeholder="Añade el nombre del Gasto" :value="nombre"
+                        @input="$emit('update:nombre', $event.target.value)">
                 </div>
 
+                <!-- Sin .prevent se cierra el valor de consola y me regresa al incio -->
                 <div class="campo">
                     <label for="nombre">Cantidad:</label>
-                    <input type="text" id="nombre" placeholder="Añade la cantridad del Gasto" 
-                    :value="cantidad"
-                    @input="$emit('update:cantidad',$event.target.value)">>
+                    <input type="number" id="nombre" placeholder="Añade la cantridad del Gasto" :value="cantidad"
+                        @input="$emit('update:cantidad', +$event.target.value)" min=0>
                 </div>
 
                 <div class="campo">
                     <label for="categoria">Categoria:</label>
-                    <select name="" id="categoria" :value="categoria " @input="$emit('update:categoria',$event.target.value)">
+                    <select name="" id="categoria" :value="categoria"
+                        @input="$emit('update:categoria', $event.target.value)">
                         <option value="">-- Seleccione --</option>
                         <option value="ahorro"> Ahorro </option>
                         <option value="comida">Comida</option>
@@ -96,11 +124,11 @@ defineProps({
     opacity: 0;
 }
 
-.contenedor-formulario.animar{
+.contenedor-formulario.animar {
     opacity: 1;
 }
 
-.contenedor-formulario.cerrar{
+.contenedor-formulario.cerrar {
     opacity: 0;
 }
 
