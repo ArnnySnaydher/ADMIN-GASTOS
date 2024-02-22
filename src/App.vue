@@ -1,15 +1,31 @@
 <script setup>
-import Filtro from './components/Filtro.vue';
 import Presupuesto from './components/Presupuesto.vue'
-import { ref } from 'vue';
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
+import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
+import Modal from './components/Modal.vue'
+import { ref,reactive } from 'vue';
+
 
 const monto = ref(0)
 const disponible = ref(0)
+const modal =reactive({
+  mostrar:false,
+  animar:false
+})
 
 const definirMonto = (cantidad) => {
   monto.value = cantidad
   disponible.value=cantidad
+}
+
+const mostrarModal = ()=>{
+  modal.mostrar=true;
+  modal.animar=true
+}
+
+const ocultarModal = ()=>{
+  modal.mostrar=false;
+  modal.animar=false
 }
 </script>
 
@@ -23,7 +39,13 @@ const definirMonto = (cantidad) => {
       </div>
 
     </header>
-    <Filtro></Filtro>
+    <main v-if="monto>0">
+      <div class="crear-gasto">
+        <img :src="iconoNuevoGasto" alt="icono nuevo gasto" @click="mostrarModal">
+      </div>
+
+      <Modal v-if="modal.mostrar && modal.animar" @ocultar-modal="ocultarModal"></Modal>
+    </main>
   </div>
 </template>
 
@@ -92,4 +114,15 @@ header h1 {
   background-color: var(--blanco);
   border-radius: 1.2rem;
   padding: 5rem;
-}</style>
+}
+.crear-gasto{
+  position: fixed;
+  bottom: 5rem;
+  right: 5rem;
+}
+.crear-gasto img{
+  width: 5rem;
+  cursor: pointer;
+}
+
+</style>
