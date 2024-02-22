@@ -2,6 +2,12 @@
 import cerrarModal from '../assets/img/cerrar.svg'
 
 defineEmits(['ocultar-modal'])
+defineProps({
+    modal: {
+        type: Object,
+        required: true
+    }
+})
 </script>
 <template>
     <div class="modal">
@@ -9,23 +15,17 @@ defineEmits(['ocultar-modal'])
             <img :src="cerrarModal" alt="" @click="$emit('ocultar-modal')">
         </div>
 
-        <div class="contenedor">
+        <div class="contenedor contenedor-formulario" :class="[modal.animar ? 'animar':'cerrar']">
             <form class="nuevo-gasto">
                 <legend>Añadir Gasto</legend>
                 <div class="campo">
                     <label for="nombre">Nombre Gasto:</label>
-                    <input type="text"
-                        id="nombre"
-                        placeholder="Añade el nombre del Gasto"
-                    >
+                    <input type="text" id="nombre" placeholder="Añade el nombre del Gasto">
                 </div>
 
                 <div class="campo">
                     <label for="nombre">Cantidad:</label>
-                    <input type="text"
-                        id="nombre"
-                        placeholder="Añade la cantridad del Gasto"
-                    >
+                    <input type="text" id="nombre" placeholder="Añade la cantridad del Gasto">
                 </div>
 
                 <div class="campo">
@@ -40,7 +40,7 @@ defineEmits(['ocultar-modal'])
                         <option value="salud">Salud</option>
                         <option value="suscripciones">Suscripciones</option>
                     </select>
-                    
+
                 </div>
 
                 <input type="submit" value="Añadir Gasto">
@@ -52,62 +52,80 @@ defineEmits(['ocultar-modal'])
 
 
 <style scoped>
-    .modal{
-        position: absolute;
-        background-color: rgb(0 0 0 / 0.9);
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
+.modal {
+    position: absolute;
+    background-color: rgb(0 0 0 / 0.9);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
 
-    .cerrar-modal{
-        position: absolute;
-        right: 3rem;
-        top: 3rem;
-    }
+.cerrar-modal {
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+}
 
-    .cerrar-modal img{
-        width: 3rem;
-        cursor: pointer;
-    }
 
-    .nuevo-gasto{
-        margin: 10rem auto 0 auto;
-        display: grid;
-        gap: 2rem;
-    }
+.cerrar-modal img {
+    width: 3rem;
+    cursor: pointer;
+}
 
-    .nuevo-gasto legend{
-        text-align: center;
-        font-size: 3rem;
-        color: var(--blanco);
-        font-weight: 700;
-    }
+.contenedor-formulario {
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in;
+    opacity: 0;
+}
 
-    .campo{
-        display: grid;
-        gap: 2rem;
-    }
+.contenedor-formulario.animar{
+    opacity: 1;
+}
 
-    .nuevo-gasto input,
-    .nuevo-gasto select{
-        background-color: var(--gris-claro);
-        border-radius: 1rem;
-        padding: 1rem;
-        border: none;
-        font-size: 2.2rem;
+.contenedor-formulario.cerrar{
+    opacity: 0;
+}
 
-    }
 
-    .nuevo-gasto label{
-        color: var(--blanco);
-        font-size: 3rem;
-    }
-    .nuevo-gasto input[type="submit"]{
-        background-color: var(--azul);
-        color: var(--blanco);
-        font-weight: 700;
-        cursor: pointer;
-    }
+.nuevo-gasto {
+    margin: 10rem auto 0 auto;
+    display: grid;
+    gap: 2rem;
+}
+
+.nuevo-gasto legend {
+    text-align: center;
+    font-size: 3rem;
+    color: var(--blanco);
+    font-weight: 700;
+}
+
+.campo {
+    display: grid;
+    gap: 2rem;
+}
+
+.nuevo-gasto input,
+.nuevo-gasto select {
+    background-color: var(--gris-claro);
+    border-radius: 1rem;
+    padding: 1rem;
+    border: none;
+    font-size: 2.2rem;
+
+}
+
+.nuevo-gasto label {
+    color: var(--blanco);
+    font-size: 3rem;
+}
+
+.nuevo-gasto input[type="submit"] {
+    background-color: var(--azul);
+    color: var(--blanco);
+    font-weight: 700;
+    cursor: pointer;
+}
 </style>
