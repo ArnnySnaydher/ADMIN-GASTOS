@@ -1,7 +1,7 @@
 <script setup>
 import cerrarModal from '../assets/img/cerrar.svg'
 
-defineEmits(['ocultar-modal'])
+defineEmits(['ocultar-modal','update:nombre','update:cantidad','update:categoria'])
 defineProps({
     modal: {
         type: Object,
@@ -32,17 +32,21 @@ defineProps({
                 <legend>Añadir Gasto</legend>
                 <div class="campo">
                     <label for="nombre">Nombre Gasto:</label>
-                    <input type="text" id="nombre" placeholder="Añade el nombre del Gasto" :value="nombre">
+                    <input type="text" id="nombre" placeholder="Añade el nombre del Gasto" 
+                        :value="nombre"
+                        @input="$emit('update:nombre',$event.target.value)">
                 </div>
 
                 <div class="campo">
                     <label for="nombre">Cantidad:</label>
-                    <input type="text" id="nombre" placeholder="Añade la cantridad del Gasto" :value="cantidad">
+                    <input type="text" id="nombre" placeholder="Añade la cantridad del Gasto" 
+                    :value="cantidad"
+                    @input="$emit('update:cantidad',$event.target.value)">>
                 </div>
 
                 <div class="campo">
                     <label for="categoria">Categoria:</label>
-                    <select name="" id="categoria" :value="categoria">
+                    <select name="" id="categoria" :value="categoria " @input="$emit('update:categoria',$event.target.value)">
                         <option value="">-- Seleccione --</option>
                         <option value="ahorro"> Ahorro </option>
                         <option value="comida">Comida</option>

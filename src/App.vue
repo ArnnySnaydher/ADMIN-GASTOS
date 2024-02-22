@@ -14,9 +14,9 @@ const modal = reactive({
 })
 
 const gasto=reactive({
-  nombre:'a',
-  cantidad:'12',
-  categoria:'ahorro',
+  nombre:'',
+  cantidad:'',
+  categoria:'',
   id:null,
   fecha: Date.now()
 
