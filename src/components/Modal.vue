@@ -88,7 +88,7 @@ const agregarGasto = () => {
 
                 </div>
 
-                <input type="submit" value="Añadir Gasto">
+                <input type="submit" value="Añadir Gasto" >
             </form>
         </div>
     </div>

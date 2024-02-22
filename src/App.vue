@@ -1,5 +1,6 @@
 <script setup>
 import Presupuesto from './components/Presupuesto.vue'
+import Gasto from './components/Gasto.vue'
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
 import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
 import Modal from './components/Modal.vue'
@@ -51,6 +52,17 @@ const guardarGasto=()=>{
   gastos.value.push({
     ...gasto,id: generateID()
   })
+
+  Object.assign(gasto,{
+    nombre:'',
+    cantidad:0,
+    categoria:'',
+    id:null,
+    fecha: Date.now()
+  }
+  )
+
+  ocultarModal()
 }
 </script>
 
@@ -65,6 +77,12 @@ const guardarGasto=()=>{
 
     </header>
     <main v-if="monto > 0">
+      <div class="Listado-gastos contenedor">
+        <h2>{{ gastos.length > 0 ? 'Gastos' : 'No hasy gastos'}}</h2>
+        <Gasto v-for="gasto in gastos" :key="gasto.id" :gasto="gasto">
+
+        </Gasto>
+      </div>
       <div class="crear-gasto">
         <img :src="iconoNuevoGasto" alt="icono nuevo gasto" @click="mostrarModal">
       </div>
@@ -158,5 +176,14 @@ header h1 {
 .crear-gasto img {
   width: 5rem;
   cursor: pointer;
+}
+
+.Listado-gastos{
+  
+  margin-top: 10rem;
+}
+.Listado-gastos h2{
+  font-weight: 900;
+  color: var(--gris-oscuro);
 }
 </style>
