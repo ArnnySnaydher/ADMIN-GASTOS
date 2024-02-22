@@ -2,9 +2,10 @@
 import { ref } from 'vue';
 import Alerta from './Alerta.vue';
 import cerrarModal from '../assets/img/cerrar.svg'
-const error = ref('')
 
-defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria'])
+const error = ref('');
+
+const emit = defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria','guardar-gasto']);
 const props = defineProps({
     modal: {
         type: Object,
@@ -45,7 +46,7 @@ const agregarGasto = () => {
         return
     }
 
-    console.log('Emitiendo gasto')
+    emit('guardar-gasto')
 }
 </script>
 <template>

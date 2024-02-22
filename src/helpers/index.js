@@ -4,3 +4,7 @@ export const formatearCantidad = (cantidad) => {
     currency: "USD",
   });
 };
+
+export const generateID = ()=>{
+  return self.crypto.randomUUID();
+}
