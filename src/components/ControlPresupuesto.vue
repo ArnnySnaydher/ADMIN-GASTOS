@@ -11,9 +11,14 @@ const props = defineProps({
     disponible: {
         type:Number,
         required: true
+    },
+    gastado:{
+        type:Number,
+        required:true
     }
 
 })
+
 
 </script>
 <template>
@@ -32,7 +37,7 @@ const props = defineProps({
                 <span>disponible: {{ formatearCantidad(disponible) }}</span>
             </p>
             <p>
-                <span>Gastado:</span>
+                <span>Gastado:{{ formatearCantidad(gastado) }}</span>
             </p>
         </div>
 

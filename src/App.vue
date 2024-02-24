@@ -5,11 +5,12 @@ import ControlPresupuesto from './components/ControlPresupuesto.vue';
 import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
 import Modal from './components/Modal.vue'
 import {generateID}  from "./helpers";
-import { ref, reactive } from 'vue';
+import { ref, reactive ,watch} from 'vue';
 
 
 const monto = ref(0)
 const disponible = ref(0)
+const gastado = ref(0)
 
 const modal = reactive({
   mostrar: false,
@@ -26,6 +27,17 @@ const gasto=reactive({
 })
 
 const gastos=ref([])
+
+watch(gastos,()=>{
+  const totalGastado = gastos.value.reduce((total,gasto)=>
+    gasto.cantidad+total,0
+  )
+
+  gastado.value =totalGastado
+
+},{
+    deep:true
+  })
 
 const definirMonto = (cantidad) => {
   monto.value = cantidad
@@ -72,14 +84,14 @@ const guardarGasto=()=>{
       <h1>Hello World</h1>
       <div class="contenedor-header contenedor sombra">
         <Presupuesto v-if="monto === 0" @definir-monto="definirMonto"></Presupuesto>
-        <ControlPresupuesto v-else :monto="monto" :disponible="disponible"></ControlPresupuesto>
+        <ControlPresupuesto v-else :monto="monto" :disponible="disponible" :gastado="gastado"></ControlPresupuesto>
       </div>
 
     </header>
     <main v-if="monto > 0">
       <div class="Listado-gastos contenedor">
         <h2>{{ gastos.length > 0 ? 'Gastos' : 'No hasy gastos'}}</h2>
-        <Gasto v-for="gasto in gastos" :key="gasto.id" :gasto="gasto" >
+        <Gasto v-for="gasto in gastos" :key="gasto.id"  :gasto="gasto">
 
         </Gasto>
       </div>
