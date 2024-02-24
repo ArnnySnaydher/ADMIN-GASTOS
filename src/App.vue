@@ -40,6 +40,15 @@ watch(gastos,()=>{
     deep:true
   })
 
+watch(modal,()=>{
+  if(!modal.mostrar){
+    
+    reiniciarStateGasto()
+  }
+},{
+  deep:true 
+})
+
 const definirMonto = (cantidad) => {
   monto.value = cantidad
   disponible.value = cantidad
@@ -60,6 +69,8 @@ const ocultarModal = () => {
   setTimeout(() => {
     modal.mostrar = false;
   }, 300)
+
+
 }
 
 const guardarGasto=()=>{
@@ -68,6 +79,11 @@ const guardarGasto=()=>{
     ...gasto,id: generateID()
   })
 
+  reiniciarStateGasto()
+
+  ocultarModal()
+}
+const reiniciarStateGasto=()=>{
   Object.assign(gasto,{
     nombre:'',
     cantidad:0,
@@ -76,8 +92,6 @@ const guardarGasto=()=>{
     fecha: Date.now()
   }
   )
-
-  ocultarModal()
 }
 
 const seleccionarGasto=(id)=>{
