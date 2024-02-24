@@ -23,11 +23,16 @@ const props = defineProps({
         type: String,
         required: true
     },
+    monto: {
+        type: Number,
+        required: true
+    },
 })
+
 
 const agregarGasto = () => {
     //Validar que no haya campo
-    const { cantidad, categoria, nombre } = props
+    const { cantidad, categoria, nombre,monto } = props
     if ([nombre, cantidad, categoria].includes('')) {
         error.value = 'Todos los campos son obligatorios.'
 
@@ -39,12 +44,22 @@ const agregarGasto = () => {
     //validad cantidad
 
     if (cantidad <= 0 || cantidad==='') {
-        error.value = 'Cantidad no valida'
+        error.value = 'Cantidad no valida '
         setTimeout(() => {
             error.value=''
         }, 3000);
         return
     }
+
+    //Validar lo disponible 
+    if (cantidad > monto) {
+        error.value = 'Cantidad excede lo disponible '
+        setTimeout(() => {
+            error.value=''
+        }, 3000);
+        return
+    }
+    
 
     emit('guardar-gasto')
 }
@@ -68,8 +83,10 @@ const agregarGasto = () => {
                 <!-- Sin .prevent se cierra el valor de consola y me regresa al incio -->
                 <div class="campo">
                     <label for="nombre">Cantidad:</label>
-                    <input type="number" id="nombre" placeholder="Añade la cantridad del Gasto" :value="cantidad"
-                        @input="$emit('update:cantidad', +$event.target.value)" min=0>
+                    <input type="number" id="nombre" placeholder="Añade la cantridad del Gasto" 
+                    v.if=""
+                    :value="cantidad"
+                    @input="$emit('update:cantidad', +$event.target.value)" min=0>
                 </div>
 
                 <div class="campo">

@@ -34,7 +34,7 @@ watch(gastos,()=>{
   )
 
   gastado.value =totalGastado
-  disponible.value=monto.value-totalGastado
+  disponible.value = monto.value-totalGastado
 
 },{
     deep:true
@@ -103,7 +103,8 @@ const guardarGasto=()=>{
       <Modal v-if="modal.mostrar && modal.animar" 
       @ocultar-modal="ocultarModal" 
       @guardar-gasto="guardarGasto"
-      :modal="modal" 
+      :modal="modal"
+      :monto='monto' 
       v-model:nombre="gasto.nombre"
       v-model:cantidad="gasto.cantidad"
       v-model:categoria="gasto.categoria"
