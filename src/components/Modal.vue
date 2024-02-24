@@ -98,12 +98,13 @@ const agregarGasto = () => {
 
 <style scoped>
 .modal {
-    position: absolute;
+    position: relative;
     background-color: rgb(0 0 0 / 0.9);
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    
 }
 
 .cerrar-modal {
