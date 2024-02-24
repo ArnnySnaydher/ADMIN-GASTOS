@@ -74,10 +74,19 @@ const ocultarModal = () => {
 }
 
 const guardarGasto=()=>{
-  
-  gastos.value.push({
+  if(gasto.id){
+    //editar
+    const {id} = gasto
+    const i = gastos.value.findIndex(item => item.id === id);
+    gastos.value[i]={...gasto};
+  }else{
+    //registro nuevo
+    gastos.value.push({
     ...gasto,id: generateID()
   })
+
+  }
+  
 
   reiniciarStateGasto()
 
@@ -129,6 +138,7 @@ const seleccionarGasto=(id)=>{
       @guardar-gasto="guardarGasto"
       :modal="modal"
       :monto='monto' 
+      :id="gasto.id"
       v-model:nombre="gasto.nombre"
       v-model:cantidad="gasto.cantidad"
       v-model:categoria="gasto.categoria"

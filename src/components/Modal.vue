@@ -5,7 +5,7 @@ import cerrarModal from '../assets/img/cerrar.svg'
 
 const error = ref('');
 
-const emit = defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria','guardar-gasto']);
+const emit = defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria', 'guardar-gasto']);
 const props = defineProps({
     modal: {
         type: Object,
@@ -27,39 +27,57 @@ const props = defineProps({
         type: Number,
         required: true
     },
+    id: {
+        type: [String, null],
+        required: true
+    },
 })
 
+const old = props.cantidad
 
 const agregarGasto = () => {
     //Validar que no haya campo
-    const { cantidad, categoria, nombre,monto } = props
+    const { cantidad, categoria, nombre, monto ,id} = props
     if ([nombre, cantidad, categoria].includes('')) {
         error.value = 'Todos los campos son obligatorios.'
 
         setTimeout(() => {
-            error.value=''
+            error.value = ''
         }, 3000);
         return
     }
     //validad cantidad
 
-    if (cantidad <= 0 || cantidad==='') {
+    if (cantidad <= 0 || cantidad === '') {
         error.value = 'Cantidad no valida '
         setTimeout(() => {
-            error.value=''
+            error.value = ''
         }, 3000);
         return
+    }
+    //Validar paera que el usuario nos gaste masd e los disponible
+    if (id) {
+        //Gasto ya realizado
+        if(cantidad > old + monto){
+            error.value = 'Cantidad excede lo disponible '
+            setTimeout(() => {
+                error.value = ''
+            }, 3000);
+            return
+        }
+    } else {
+        //Validar lo disponible 
+        if (cantidad > monto) {
+            error.value = 'Cantidad excede lo disponible '
+            setTimeout(() => {
+                error.value = ''
+            }, 3000);
+            return
+        }
     }
 
-    //Validar lo disponible 
-    if (cantidad > monto) {
-        error.value = 'Cantidad excede lo disponible '
-        setTimeout(() => {
-            error.value=''
-        }, 3000);
-        return
-    }
-    
+
+
 
     emit('guardar-gasto')
 }
@@ -83,10 +101,8 @@ const agregarGasto = () => {
                 <!-- Sin .prevent se cierra el valor de consola y me regresa al incio -->
                 <div class="campo">
                     <label for="nombre">Cantidad:</label>
-                    <input type="number" id="nombre" placeholder="Añade la cantridad del Gasto" 
-                    v.if=""
-                    :value="cantidad"
-                    @input="$emit('update:cantidad', +$event.target.value)" min=0>
+                    <input type="number" id="nombre" placeholder="Añade la cantridad del Gasto" v.if="" :value="cantidad"
+                        @input="$emit('update:cantidad', +$event.target.value)" min=0>
                 </div>
 
                 <div class="campo">
@@ -105,7 +121,7 @@ const agregarGasto = () => {
 
                 </div>
 
-                <input type="submit" value="Añadir Gasto" >
+                <input type="submit" value="Añadir Gasto">
             </form>
         </div>
     </div>
@@ -121,7 +137,7 @@ const agregarGasto = () => {
     left: 0;
     right: 0;
     bottom: 0;
-    
+
 }
 
 .cerrar-modal {
