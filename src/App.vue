@@ -34,6 +34,7 @@ watch(gastos,()=>{
   )
 
   gastado.value =totalGastado
+  disponible.value=monto.value-totalGastado
 
 },{
     deep:true
