@@ -51,6 +51,7 @@ const mostrarModal = () => {
     modal.animar = true;
   }, 300)
 
+
 }
 
 const ocultarModal = () => {
@@ -62,6 +63,7 @@ const ocultarModal = () => {
 }
 
 const guardarGasto=()=>{
+  
   gastos.value.push({
     ...gasto,id: generateID()
   })
@@ -77,6 +79,14 @@ const guardarGasto=()=>{
 
   ocultarModal()
 }
+
+const seleccionarGasto=(id)=>{
+  const gastoEditar = gastos.value.filter(gasto=>gasto.id === id)[0]
+  
+  Object.assign(gasto,gastoEditar)
+  mostrarModal()
+}
+
 </script>
 
 <template>
@@ -92,7 +102,7 @@ const guardarGasto=()=>{
     <main v-if="monto > 0">
       <div class="Listado-gastos contenedor">
         <h2>{{ gastos.length > 0 ? 'Gastos' : 'No hasy gastos'}}</h2>
-        <Gasto v-for="gasto in gastos" :key="gasto.id"  :gasto="gasto">
+        <Gasto v-for="gasto in gastos" :key="gasto.id" :gasto="gasto" @seleccionar-gasto="seleccionarGasto">
 
         </Gasto>
       </div>

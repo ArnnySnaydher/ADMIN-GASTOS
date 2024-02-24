@@ -9,14 +9,14 @@ import IconoSuscripciones from '../assets/img/icono_suscripciones.svg'
 import { formatearCantidad, formatearFecha } from '../helpers'
 
 const diccionarioIconos = {
-        ahorro : IconoAhorro,
-        comida : IconoComida,
-        casa : IconoCasa,
-        gastos : IconoGastos,
-        ocio : IconoOcio,
-        salud : IconoSalud,
-        suscripciones : IconoSuscripciones
-    }
+    ahorro: IconoAhorro,
+    comida: IconoComida,
+    casa: IconoCasa,
+    gastos: IconoGastos,
+    ocio: IconoOcio,
+    salud: IconoSalud,
+    suscripciones: IconoSuscripciones
+}
 
 const props = defineProps({
     gasto: {
@@ -24,21 +24,21 @@ const props = defineProps({
         required: true
     }
 })
+
+defineEmits(["seleccionar-gasto"])
 </script>
 <template>
     <div class="gasto sombra">
         <div class="contenido">
-            <img 
-            :src="diccionarioIconos[gasto.categoria]" 
-            alt="icono gasto"
-            class="icono">
+            <img :src="diccionarioIconos[gasto.categoria]" alt="icono gasto" class="icono">
             <div class="detalles">
                 <p class="categoria">{{ gasto.categoria }}</p>
-                <p class="nombre">{{ gasto.nombre }}</p>
+                <p class="nombre" @click="$emit('seleccionar-gasto',gasto.id)">{{ gasto.nombre }}</p>
 
                 <p class="fecha">
                     Fecha:
-                    <span>{{ formatearFecha(gasto.fecha) }}</span></p>
+                    <span>{{ formatearFecha(gasto.fecha) }}</span>
+                </p>
             </div>
         </div>
 
@@ -47,50 +47,54 @@ const props = defineProps({
 </template>
 
 <style scoped>
-.gasto{
+.gasto {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
 }
 
-.contenido{
-    display:flex;
+.contenido {
+    display: flex;
     align-items: center;
-    gap:2rem;
+    gap: 2rem;
 }
 
 
-.icono{
+.icono {
     width: 5rem;
 }
 
-.detalles p{
+.detalles p {
     margin: 0 0 1rem 0;
 }
-.categoria{
+
+.categoria {
     color: var(--gris);
     font-size: 1.2rem;
     text-transform: uppercase;
     font-weight: 900;
 }
-.nombre{
-    color:var(--gris-oscuro);
+
+.nombre {
+    color: var(--gris-oscuro);
     font-size: 2.4rem;
     font-weight: 700;
     cursor: pointer;
 
 }
 
-.fecha{
+.fecha {
     color: var(--gris-oscuro);
     font-size: 1.6rem;
     font-weight: 900;
 }
-.fecha span{
+
+.fecha span {
     font-weight: 400;
 }
-.cantidad{
+
+.cantidad {
     font-size: 3rem;
     font-weight: 900;
     margin: 0;
