@@ -98,7 +98,7 @@ const agregarGasto = () => {
 
 <style scoped>
 .modal {
-    position: relative;
+    position: absolute;
     background-color: rgb(0 0 0 / 0.9);
     top: 0;
     left: 0;
