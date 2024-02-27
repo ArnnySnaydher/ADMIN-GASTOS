@@ -92,6 +92,12 @@ const guardarGasto=()=>{
 
   ocultarModal()
 }
+
+const deleteGasto=(id)=>{
+  const eliminarGasto = gastos.value.filter((item)=> item.id !== id )
+  gastos.value = eliminarGasto
+  ocultarModal();
+}
 const reiniciarStateGasto=()=>{
   Object.assign(gasto,{
     nombre:'',
@@ -139,6 +145,7 @@ const seleccionarGasto=(id)=>{
       :modal="modal"
       :monto='monto' 
       :id="gasto.id"
+      @delete-gasto="deleteGasto"
       v-model:nombre="gasto.nombre"
       v-model:cantidad="gasto.cantidad"
       v-model:categoria="gasto.categoria"

@@ -5,7 +5,8 @@ import cerrarModal from '../assets/img/cerrar.svg'
 
 const error = ref('');
 
-const emit = defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria', 'guardar-gasto']);
+const emit = defineEmits(['ocultar-modal', 
+'update:nombre', 'update:cantidad', 'update:categoria', 'guardar-gasto','delete-gasto']);
 const props = defineProps({
     modal: {
         type: Object,
@@ -76,15 +77,15 @@ const agregarGasto = () => {
         }
     }
 
-    const isEditar = computed(()=>{
-        return props.id
-    })
-
-
-
+  
 
     emit('guardar-gasto')
 }
+
+const isEditar = computed(()=>{
+        return props.id;
+    })
+
 </script>
 <template>
     <div class="modal">
@@ -128,6 +129,7 @@ const agregarGasto = () => {
                 <input type="submit" 
                 :value="[isEditar ? 'Guardar Cambios': 'Añadir Gastos']">
             </form>
+            <button class="contenedor__button" v-if="isEditar" @click="$emit('delete-gasto',id)" >Eliminar gasto</button>
         </div>
     </div>
 </template>
@@ -184,6 +186,7 @@ const agregarGasto = () => {
     font-size: 3rem;
     color: var(--blanco);
     font-weight: 700;
+    text-transform: uppercase;
 }
 
 .campo {
@@ -192,18 +195,20 @@ const agregarGasto = () => {
 }
 
 .nuevo-gasto input,
+.contenedor__button,
 .nuevo-gasto select {
     background-color: var(--gris-claro);
     border-radius: 1rem;
     padding: 1rem;
     border: none;
-    font-size: 2.2rem;
+    font-size: 2rem;
 
 }
 
 .nuevo-gasto label {
     color: var(--blanco);
-    font-size: 3rem;
+    font-size: 2rem;
+    text-transform: uppercase;
 }
 
 .nuevo-gasto input[type="submit"] {
@@ -211,5 +216,17 @@ const agregarGasto = () => {
     color: var(--blanco);
     font-weight: 700;
     cursor: pointer;
+    text-transform: uppercase;
+
+}
+
+.contenedor__button{
+    width: 100%;
+    margin-top: 1rem;
+    background-color: crimson;
+    color: var(--blanco);
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
 }
 </style>
