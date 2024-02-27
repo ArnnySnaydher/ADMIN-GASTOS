@@ -1,5 +1,6 @@
 <script setup>
 import Presupuesto from './components/Presupuesto.vue'
+import Filtros from './components/Filtros.vue'
 import Gasto from './components/Gasto.vue'
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
 import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
@@ -11,6 +12,7 @@ import { ref, reactive ,watch} from 'vue';
 const monto = ref(0)
 const disponible = ref(0)
 const gastado = ref(0)
+const filtro = ref('')
 
 const modal = reactive({
   mostrar: false,
@@ -87,7 +89,6 @@ const guardarGasto=()=>{
 
   }
   
-
   reiniciarStateGasto()
 
   ocultarModal()
@@ -131,8 +132,11 @@ const seleccionarGasto=(id)=>{
       </div>
 
     </header>
+    
     <main v-if="monto > 0">
+      
       <div class="Listado-gastos contenedor">
+        <Filtros v-model:filtro="filtro"></Filtros>
         <h2>{{ gastos.length > 0 ? 'Gastos' : 'No hasy gastos'}}</h2>
         <Gasto v-for="gasto in gastos" :key="gasto.id" :gasto="gasto" @seleccionar-gasto="seleccionarGasto">
 

@@ -123,7 +123,6 @@ const isEditar = computed(()=>{
                         <option value="salud">Salud</option>
                         <option value="suscripciones">Suscripciones</option>
                     </select>
-
                 </div>
 
                 <input type="submit" 
