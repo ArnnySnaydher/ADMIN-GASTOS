@@ -94,9 +94,12 @@ const guardarGasto=()=>{
 }
 
 const deleteGasto=(id)=>{
-  const eliminarGasto = gastos.value.filter((item)=> item.id !== id )
-  gastos.value = eliminarGasto
-  ocultarModal();
+  if(confirm('Desea Eliminar este Gasto')){
+    const eliminarGasto = gastos.value.filter((item)=> item.id !== id ) 
+    gastos.value = eliminarGasto
+     ocultarModal();
+  }
+  
 }
 const reiniciarStateGasto=()=>{
   Object.assign(gasto,{
