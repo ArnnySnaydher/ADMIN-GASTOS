@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import Alerta from './Alerta.vue';
 import cerrarModal from '../assets/img/cerrar.svg'
 
@@ -76,6 +76,10 @@ const agregarGasto = () => {
         }
     }
 
+    const isEditar = computed(()=>{
+        return props.id
+    })
+
 
 
 
@@ -90,7 +94,7 @@ const agregarGasto = () => {
 
         <div class="contenedor contenedor-formulario" :class="[modal.animar ? 'animar' : 'cerrar']">
             <form class="nuevo-gasto" @submit.prevent="agregarGasto">
-                <legend>Añadir Gasto</legend>
+                <legend>{{isEditar ? 'Editar Gasto' : 'Añadir Gasto'}}</legend>
                 <Alerta v-if="error">{{ error }}</Alerta>
                 <div class="campo">
                     <label for="nombre">Nombre Gasto:</label>
@@ -101,7 +105,7 @@ const agregarGasto = () => {
                 <!-- Sin .prevent se cierra el valor de consola y me regresa al incio -->
                 <div class="campo">
                     <label for="nombre">Cantidad:</label>
-                    <input type="number" id="nombre" placeholder="Añade la cantridad del Gasto" v.if="" :value="cantidad"
+                    <input type="number" id="nombre" placeholder="Añade la cantidad del Gasto" v.if="" :value="cantidad"
                         @input="$emit('update:cantidad', +$event.target.value)" min=0>
                 </div>
 
@@ -121,7 +125,8 @@ const agregarGasto = () => {
 
                 </div>
 
-                <input type="submit" value="Añadir Gasto">
+                <input type="submit" 
+                :value="[isEditar ? 'Guardar Cambios': 'Añadir Gastos']">
             </form>
         </div>
     </div>
