@@ -1,8 +1,8 @@
 <script setup>
 import Presupuesto from './components/Presupuesto.vue'
-import Filtros from './components/Filtros.vue'
 import Gasto from './components/Gasto.vue'
 import ControlPresupuesto from './components/ControlPresupuesto.vue';
+import Filtros from './components/Filtros.vue';
 import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
 import Modal from './components/Modal.vue'
 import {generateID}  from "./helpers";
