@@ -6,7 +6,7 @@ import Filtros from './components/Filtros.vue';
 import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
 import Modal from './components/Modal.vue'
 import {generateID}  from "./helpers";
-import { ref, reactive ,watch} from 'vue';
+import { ref, reactive ,watch ,computed} from 'vue';
 
 
 const monto = ref(0)
@@ -120,6 +120,13 @@ const seleccionarGasto=(id)=>{
   mostrarModal()
 }
 
+const gastosFiltrado = computed(()=>{
+  if(filtro.value){
+    return gastos.value.filter(gasto => gasto.categoria===filtro.value)
+  }
+  return gastos.value
+})
+
 </script>
 
 <template>
@@ -138,7 +145,7 @@ const seleccionarGasto=(id)=>{
       <div class="Listado-gastos contenedor">
         <Filtros v-model:filtro="filtro"></Filtros>
         <h2>{{ gastos.length > 0 ? 'Gastos' : 'No hasy gastos'}}</h2>
-        <Gasto v-for="gasto in gastos" :key="gasto.id" :gasto="gasto" @seleccionar-gasto="seleccionarGasto">
+        <Gasto v-for="gasto in gastosFiltrado" :key="gasto.id" :gasto="gasto" @seleccionar-gasto="seleccionarGasto">
 
         </Gasto>
       </div>
