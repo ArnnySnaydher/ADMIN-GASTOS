@@ -38,7 +38,7 @@ watch(gastos,()=>{
   gastado.value =totalGastado
   disponible.value = monto.value-totalGastado
 
- 
+  localStorage.setItem('gastos',JSON.stringify(gastos.value))
 
 },{
     deep:true
@@ -62,6 +62,11 @@ onMounted(()=>{
   if(presupuestoStorage){
     monto.value=Number(presupuestoStorage)
     disponible.value=Number(presupuestoStorage)
+  }
+
+  const gastosStorage=localStorage.getItem( 'gastos' )
+  if(gastosStorage){
+    gastos.value=JSON.parse(gastosStorage)
   }
 })
 
