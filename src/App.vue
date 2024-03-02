@@ -6,7 +6,7 @@ import Filtros from './components/Filtros.vue';
 import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
 import Modal from './components/Modal.vue'
 import {generateID}  from "./helpers";
-import { ref, reactive ,watch ,computed} from 'vue';
+import { ref, reactive ,watch ,computed,onMounted} from 'vue';
 
 
 const monto = ref(0)
@@ -38,6 +38,8 @@ watch(gastos,()=>{
   gastado.value =totalGastado
   disponible.value = monto.value-totalGastado
 
+ 
+
 },{
     deep:true
   })
@@ -49,6 +51,18 @@ watch(modal,()=>{
   }
 },{
   deep:true 
+})
+
+watch(monto,()=>{
+  localStorage.setItem('monto',monto.value)
+})
+
+onMounted(()=>{
+  const presupuestoStorage= localStorage.getItem('monto')
+  if(presupuestoStorage){
+    monto.value=Number(presupuestoStorage)
+    disponible.value=Number(presupuestoStorage)
+  }
 })
 
 const definirMonto = (cantidad) => {
