@@ -32,13 +32,18 @@ const props = defineProps({
         type: [String, null],
         required: true
     },
+    disponible: {
+        type: Number,
+        required: true
+    },
 })
 
 const old = props.cantidad
+// console.log('old', props.disponible)
 
 const agregarGasto = () => {
     //Validar que no haya campo
-    const { cantidad, categoria, nombre, monto ,id} = props
+    const { cantidad, categoria, nombre, monto ,id ,disponible} = props
     if ([nombre, cantidad, categoria].includes('')) {
         error.value = 'Todos los campos son obligatorios.'
 
@@ -59,7 +64,7 @@ const agregarGasto = () => {
     //Validar paera que el usuario nos gaste masd e los disponible
     if (id) {
         //Gasto ya realizado
-        if(cantidad > old + monto){
+        if(cantidad >= old + monto){
             error.value = 'Cantidad excede lo disponible '
             setTimeout(() => {
                 error.value = ''
@@ -68,7 +73,7 @@ const agregarGasto = () => {
         }
     } else {
         //Validar lo disponible 
-        if (cantidad > monto) {
+        if (cantidad > monto || disponible<=0 ) {
             error.value = 'Cantidad excede lo disponible '
             setTimeout(() => {
                 error.value = ''

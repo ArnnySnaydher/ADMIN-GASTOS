@@ -195,6 +195,7 @@ const resetApp = ()=>{
       v-model:nombre="gasto.nombre"
       v-model:cantidad="gasto.cantidad"
       v-model:categoria="gasto.categoria"
+      :disponible="disponible" 
       >
       </Modal>
     </main>
