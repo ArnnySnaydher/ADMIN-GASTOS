@@ -160,7 +160,7 @@ const resetApp = ()=>{
 <template>
   <div :class="{fijar:modal.mostrar}">
     <header>
-      <h1>Hello World</h1>
+      <h1>CONTROL DE GASTOS</h1>
       <div class="contenedor-header contenedor sombra">
         <Presupuesto v-if="monto === 0" @definir-monto="definirMonto"></Presupuesto>
         <ControlPresupuesto v-else 
