@@ -1,37 +1,45 @@
-
 <script setup>
-import imagen from '../assets/img/grafico.jpg'
-import {formatearCantidad} from '../helpers'
+import CircleProgress from 'vue3-circle-progress'
+import "vue3-circle-progress/dist/circle-progress.css";
+import { formatearCantidad } from '../helpers'
 
-const emits=defineEmits(['reset-app'])
+const emits = defineEmits(['reset-app'])
 
 const props = defineProps({
     monto: {
-        type:Number,
+        type: Number,
         required: true
     },
     disponible: {
-        type:Number,
+        type: Number,
         required: true
     },
-    gastado:{
-        type:Number,
-        required:true
+    gastado: {
+        type: Number,
+        required: true
     }
 
 })
 
 
 </script>
+
 <template>
     <div class="dos-columnas">
         <div class="contenedor-grafico">
-            <img :src="imagen" alt="" />
+
+            <CircleProgress 
+            :percent="50"
+            :size="250"
+            :border-width="30"
+            :border-bg-width="30"
+            fill-color="#3B82F6"
+            empty-color="#E1E1E1"
+            ></CircleProgress>
+
         </div>
         <div class="contenedor-presupuesto">
-            <button class="reset-app"
-            type="button"
-                @click="$emit('reset-app')">
+            <button class="reset-app" type="button" @click="$emit('reset-app')">
                 Resetear App
             </button>
             <p>
@@ -74,7 +82,7 @@ const props = defineProps({
     color: var(--azul);
 }
 
-.reset-app{
+.reset-app {
     background-color: #db2777;
     border: none;
     padding: 1rem;
@@ -87,7 +95,7 @@ const props = defineProps({
     transition-duration: 300ms;
 }
 
-.reset-app:hover{
+.reset-app:hover {
     cursor: pointer;
     background-color: #c11d67;
 }
